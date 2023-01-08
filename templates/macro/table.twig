@@ -1,0 +1,107 @@
+{% macro marks_table(sortedMarks = [], withEditLink = true) %}
+	<div class="card">
+		<div class="card-body p-0">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Przedmiot</th>
+						<th>Oceny</th>
+						<th>Średnia</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if sortedMarks|length > 0 %}
+						{% for subject, marks in sortedMarks %}
+							{% set sum = 0  %}
+							<tr>
+								<td>{{ subject }}</td>
+								<td class="mw-50 mark-with-description">
+									{% for mark in marks %}
+										{% set sum = sum + mark.value %}
+										{% if withEditLink %}
+											<a class="mark-with-description__trigger" href="{{ path('app_mark_edit', {id: mark.id}) }}">{{ mark.value|round(2) }}</a>
+											{% if loop.index < marks|length  %},
+											{% endif %}
+										{% else %}
+											<span class="mark-with-description__trigger btn-link">{{ mark.value|round(2) }}
+											</span>
+											{% if loop.index < marks|length  %},
+											{% endif %}
+										{% endif %}
+										<div class="mark-with-description__container shadow-sm p-3 mb-5 bg-white rounded {% if mark.description %}mark-with-description__container--with-description{% endif %}">
+											<span>Wystawiona:
+												{{ mark.createdAt|date('Y-m-d') }}</span>
+											<br>
+											<span>Nauczyciel:
+												{{ mark.instructor.userData.getDisplayName }}</span>
+											<br>
+											{% if mark.description %}
+												<span>Opis:
+													{{ mark.description }}</span>
+											{% endif %}
+										</div>
+									{% endfor %}
+								</td>
+								{% set avg = sum / marks|length %}
+								<td>{{ avg|round(2) }}</td>
+							</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+					</td>
+				{% endif %}
+
+			</tbody>
+		</table>
+	</div>
+</div>{% endmacro %}
+{% macro user_table(list, role = 'ROLE_INSTRUCTOR') %}
+<div class="card">
+	<div class="card-body p-0">
+        <table class="table">
+            <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imię</th>
+                        <th>Nazwisko</th>
+                        <th>Email</th>
+                        {% if role == ROLE_STUDENT %}
+                            <th>Klasa</th>
+                        {% endif %}
+                        <th>Usuń</th>
+                    </tr>
+            </thead>
+            <tbody>
+                    {% if list|length > 0 %}
+                        {% for user in list %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.userData.name }}</td>
+                                <td>{{ user.userData.surname }}</td>
+                                <td>{{ user.userData.email }}</td>
+                                {% if role == ROLE_STUDENT %}
+                                    <td>{{ user.classGroup.name }}</td>
+                                {% endif %}
+                                <td>-</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            {% if role == ROLE_STUDENT %}
+                                <td>-</td>
+                            {% endif %}
+                            <td>-</td>
+                        </tr>
+                    </td>
+                {% endif %}
+            </tbody>
+	    </table>
+    </div>
+</div>
+{% endmacro %}

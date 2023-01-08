@@ -1,0 +1,116 @@
+{% set page = app.request.get('_route') %}
+
+<aside
+	class="main-sidebar sidebar-dark-primary elevation-4">
+	<!-- Brand Logo -->
+	<a href="{{ path('app_home') }}" class="brand-link">
+		<span class="brand-text font-weight-light">E-Dzienniczek</span>
+	</a>
+
+	<!-- Sidebar -->
+	<div
+		class="sidebar">
+		<!-- Sidebar user panel (optional) -->
+		<div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
+			<div class="image">
+				<div class="img-circle elevation-2" style="width: 35px; height: 35px"></div>
+			</div>
+			<div class="info">
+				<a href="{{ path('app_student') }}" class="d-block">{{ user.displayName }}</a>
+			</div>
+		</div>
+
+		<!-- Sidebar Menu -->
+		<nav class="mt-2">
+			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+				<li class="nav-item">
+					<a href="{{ path('app_home') }}" class="nav-link {% if page == 'app_panel' %}active{% endif %}">
+						<i class="nav-icon fas fa-solid fa-house-user"></i>
+						<p>
+							Strona Główna
+						</p>
+					</a>
+				</li>
+
+				{% if is_granted(ROLE_STUDENT) %}
+					<li class="nav-item">
+						<a href="{{ path('app_student_marks') }}" class="nav-link">
+							<i class="nav-icon fas fa-solid fa-graduation-cap"></i>
+							<p>
+								Oceny
+							</p>
+						</a>
+					</li>
+
+				{% endif %}
+
+				{% if is_granted(ROLE_INSTRUCTOR) %}
+					<li class="nav-item">
+						<a href="{{ path('app_mark_create') }}" class="nav-link">
+							<i class="nav-icon fas fa-solid fa-graduation-cap"></i>
+							<p>
+								Wstaw Ocenę
+							</p>
+						</a>
+					</li>
+
+				{% endif %}
+
+				{% if is_granted(ROLE_INSTRUCTOR) or is_granted(ROLE_SUPER_USER) %}
+					<li class="nav-item">
+						<a href="{{ path('app_class_group') }}" class="nav-link">
+							<i class="nav-icon fas fa-solid fa-users"></i>
+							<p>
+								Lista klas
+							</p>
+						</a>
+					</li>
+				{% endif %}
+
+				{% if is_granted(ROLE_SUPER_USER) %}
+					<li class="nav-item">
+						<a href="{{ path('app_subject_create') }}" class="nav-link">
+							<i class="nav-icon fas fa-solid fa-calendar-plus"></i>
+							<p>
+								Dodaj przedmiot
+							</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ path('app_class_group_create') }}" class="nav-link">
+							<i class="nav-icon fas fa-solid fa-user-plus"></i>
+							<p>
+								Dodaj klasę
+							</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link">
+							<i class="nav-icon fas fa-user"></i>
+							<p>
+								Uzytkownicy
+								<i class="fas fa-angle-left right"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview" style="display: none;">
+							<li class="nav-item">
+								<a href="{{ path('app_user_student_list') }}" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Uczniowie</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ path('app_user_instructor_list') }}" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Nauczyciele</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+				{% endif %}
+			</ul>
+		</nav>
+		<!-- /.sidebar-menu -->
+	</div>
+	<!-- /.sidebar -->
+</aside>

@@ -1,0 +1,12 @@
+{% extends 'panel.base.html.twig' %}
+{% import 'macro/table.twig' as table %}
+{% block title %}Lista nauczycieli
+{% endblock %}
+
+{% block body %}
+    <div class="w-75 m-auto">
+        <h3 class="my-4">Lista uczniów</h3>
+        {{ table.user_table(users, ROLE_STUDENT) }}
+        <a href="{{ path('app_user_student_create') }}" class="btn btn-primary">Dodaj ucznia</a>
+    </div>
+{% endblock %}

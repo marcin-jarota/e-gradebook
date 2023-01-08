@@ -1,0 +1,9 @@
+{% extends 'panel.base.html.twig' %}
+
+{% block title %}
+	Edytuj ocenę
+{% endblock %}
+
+{% block body %}
+	<div {{ react_component('EditMarkController', { endpoints: { 'submit': path('app_api_mark_edit', {id: mark.id}), 'delete': path('app_api_mark_delete', {id: mark.id}), redirect: path('app_student_profile', {id: mark.studentId.id})  }, 'mark' : { id: mark.id, description: mark.description, student: mark.studentid.userdata.getdisplayname, value: mark.value, subjectName: mark.subject.name }, }) }}></div>
+{% endblock %}

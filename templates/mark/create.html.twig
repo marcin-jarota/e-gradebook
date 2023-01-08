@@ -1,0 +1,18 @@
+{% extends 'panel.base.html.twig' %}
+
+{% block title %}
+    Wystaw ocenę
+{% endblock %}
+
+{% block body %}
+    <div {{ react_component('AddMarkController',
+        { endpoints: 
+            {
+                'classList': path('app_api_class_group'),
+                'studentsList': path('app_api_class_group_students_list', {'id': '%classGroupId%'}),
+                'subjectList': path('app_api_subject_list'),
+                'submit': path('app_api_mark_create') 
+            }
+        }) 
+        }}></div>
+{% endblock %}

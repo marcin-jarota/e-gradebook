@@ -1,0 +1,14 @@
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+app_logout:
+    path: /wyloguj
+    methods: GET
+
+# redirecting the homepage
+homepage:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /app
+        permanent: true

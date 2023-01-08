@@ -1,0 +1,59 @@
+{% extends 'panel.base.html.twig' %}
+
+{% import "macro/table.twig" as table %}
+
+{% block title %}
+	Lista Klas
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid px-md-5 m-auto">
+		<div class="row">
+			<div class="col-md-6">
+				<h3>Klasa
+					{{ class.name }}</h3>
+				<div class="card">
+					<div class="card-body p-0">
+						<table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+							<thead>
+								<tr>
+									<th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">ID</th>
+									<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Imię</th>
+									<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Nazwisko</th>
+									<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Średnia Ocen</th>
+									<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Profil</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								{% for student in class.students %}
+									<tr>
+										<td>
+											{{student.id}}
+										</td>
+										<td>{{ student.userData.name }}</td>
+										<td>{{ student.userData.surname }}</td>
+										<td>
+											{% if student.calculateAverageGrage %}
+												{{ student.calculateAverageGrage }}
+											{% else %}
+												Brak ocen
+											{% endif %}
+										</td>
+										<td>
+											<a href="{{ path('app_student_profile', {id: student.id}) }}">Profil</a>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h3>Oceny w klasie</h3>
+				{{ table.marks_table(sortedMarks, false) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	<div class="container mt-4">
+		<div class="row  justify-content-md-center align-items-center">
+			<h1 class="text-center">e-Dziennik</h1>
+			<div class="col col-md-8 col-lg-4">
+				{% if error %}
+					<div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+				<form action="{{ path('app_login') }}" method="post">
+					<label for="username" class="form-label">Email:</label>
+					<input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}"/>
+
+					<label for="password" class="form-label mt-2">Password:</label>
+					<input
+					type="password" id="password" class="form-control" name="_password"/>
+
+					{# <input type="hidden" name="_target_path" value="/token-create"/> #}
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+					<div class="d-flex flex-column align-items-center">
+						<button type="submit" class="btn btn-primary w-100 m-3 p-2">Zaloguj</button>
+						<a href="{{path('app_student_register')}}" class="p-2">Zarejestruj</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

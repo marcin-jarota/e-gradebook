@@ -1,0 +1,45 @@
+{% extends 'panel.base.html.twig' %}
+
+{% block title %}
+	Lista Klas
+{% endblock %}
+
+{% block body %}
+	<div class="w-75 m-auto">
+		<h1 class="my-4">Lista klas</h1>
+		<div class="card">
+			<div class="card-body p-0">
+				<table class="table">
+					<thead>
+						<tr>
+							<th style="width: 10px">#</th>
+							<th>Nazwa Klasy</th>
+							<th>Limit (max 31)</th>
+							<th style="width: 40px">Uczniowie</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for classGroup in classGroups %}
+							{% set classFillPercent = classGroup.students|length / 31 * 100 %}
+							<tr>
+								<td>{{ classGroup.id }}</td>
+								<td>
+									<a href="{{ path('app_class_group_index', {'id': classGroup.id}) }}">{{ classGroup.name }}</a>
+								</td>
+								<td>
+									<div class="progress progress-xs">
+										<div class="progress-bar progress-bar-danger" style="width: {{ classFillPercent }}%"></div>
+									</div>
+								</td>
+								<td>
+									<span class="">{{ classGroup.students|length }}</span>
+								</td>
+							</tr>
+						{% endfor %}
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

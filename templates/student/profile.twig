@@ -1,0 +1,15 @@
+{% extends 'panel.base.html.twig' %}
+
+{% import "macro/table.twig" as tables %}
+
+{% block title %}Profil Ucznia
+{% endblock %}
+
+{% block body %}
+	<div class="w-75 m-auto">
+		<h3 class="mb-5">{{ student.userData.getDisplayName }}</h3>
+
+		<h4>Oceny</h4>
+		{{ tables.marks_table(sortedMarks) }}
+	</div>
+</div>{% endblock %}

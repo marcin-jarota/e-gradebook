@@ -1,0 +1,22 @@
+.mark-with-description {
+    position: relative;
+}
+
+.mark-with-description__container {
+    display: none;
+    position: absolute;
+    top: -140%;
+    min-width: 220px;
+}
+
+.mark-with-description__container--with-description {
+    top: -180%;
+}
+
+.mark-with-description__container:hover {
+    display: block;
+}
+
+.mark-with-description__trigger:hover + .mark-with-description__container {
+    display: block;
+}
